@@ -34,6 +34,7 @@ export default class Country extends Component {
       <input size="small" className="input-button" id="0" type="button" value="Learn More" onClick={((e)=> this.handleClick(e, 0))}/>
     </CardActions>
   </Card>
+  <br/>
   <Card>
     <CardActionArea>
       <img

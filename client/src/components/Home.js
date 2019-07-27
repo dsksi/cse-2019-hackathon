@@ -22,6 +22,7 @@ export default class Home extends Component {
        displayButton: "block",
        country: 0,
        id: 0,
+       preview: true
       };
      this.onDrop = this.onDrop.bind(this);
 	}
@@ -34,21 +35,22 @@ export default class Home extends Component {
     }
   }
 
+  // handle location change
   handleChange = event => {
     var name = [event.target.id];
     this.setState({
       [name]: event.target.value,
     });
     window.localStorage.setItem('country', event.target.value)
+    this.setState({
+      objectsStr: "",
+      objects: [],
+      classesStr: "",
+      classes: [],
+      pictures: [],
+    })
+    
     if (this.state.pictures.length > 0) {
-      this.setState({
-        objectsStr: "",
-        objects: [],
-      })
-      this.setState({
-        classesStr: "",
-        classes: [],
-      })
       this.predict();
     }
   };
@@ -67,7 +69,9 @@ export default class Home extends Component {
         displayButton: "block",
       });
     }
-    if (pictureFiles.length > 0) {
+
+    
+    if (pictureFiles.length >= 1) {
       this.setState({
         objectsStr: "",
         objects: [],
@@ -78,7 +82,13 @@ export default class Home extends Component {
       })
       this.predict();
     }
-
+    
+    if (pictureFiles.length !== 0) { 
+      pictureFiles = []; 
+      this.setState({
+        pictures: [],
+      });
+    }
   }
       
   async predict() {
@@ -87,6 +97,9 @@ export default class Home extends Component {
     // Load the model.
     const model = await cocoSsd.load();
     // Classify the image.
+    if (image[1] === null) {
+      return;
+    }
     const predictions = await model.detect(image[1]);
 
     if (predictions.length === 0) {
@@ -160,7 +173,7 @@ export default class Home extends Component {
                 	onChange={this.onDrop}
                 	imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']}
                   maxFileSize={5242880}
-                  withPreview={true}
+                  withPreview={this.state.preview}
                   buttonStyles={{ display: this.state.displayButton }}
             />
           </div>
