@@ -40,13 +40,15 @@ export default class Home extends Component {
   }
 
   render() {
+    let width = window.outerWidth * 0.8;
+    console.log(window.outerWidth)
     return (
       <div>
         { this.state.type === 1 && <h2>Sorry, we can't recognise.</h2> }
         <h1>Little litters!!!</h1>
         <p>upload image here</p>
         <input type="file" onChange={this.onDrop}/>
-        <img id="image" alt="no uploaded images" src={this.state.picture}/>
+        <img id="image" alt="no uploaded images" width={width} src={this.state.picture}/>
       </div>
     );
   }
