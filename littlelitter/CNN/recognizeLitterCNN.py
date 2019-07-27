@@ -12,7 +12,8 @@ from PIL import Image
 def pretrained_cnn(img64):
 	imgdata=base64.b64decode(str(img64))
     # image=Image.open(io.BytesIO(imgdata))
-	path = Path(os.getcwd())/"data"
+	path = os.path.join(os.path.dirname(__file__), 'data')
+	#path = Path(os.getcwd())/"data"
 	learn = load_learner(path)
 	img = open_image(io.BytesIO(imgdata))
 	pred_class, pred_idx, outputs  = learn.predict(img)

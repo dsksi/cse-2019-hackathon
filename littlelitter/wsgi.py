@@ -8,4 +8,4 @@ if os.path.exists(dotenv_path):
 
 # create app instance
 from littlelitter import create_app
-app = create_app('production')
+app = create_app('production')  # TODO

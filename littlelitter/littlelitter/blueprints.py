@@ -1,10 +1,11 @@
-from CNN import recognizeLitterCNN
+from CNN.recognizeLitterCNN import pretrained_cnn
 from flask_cors import CORS
 from flask import Blueprint, jsonify, request
 from flask.views import MethodView
 from littlelitter.schemas import *
 from littlelitter.models import *
 import random
+import json
 
 api_v1 = Blueprint('api_v1', __name__)
 CORS(api_v1)
@@ -49,14 +50,12 @@ class GetVolunteerAPI(MethodView):
 
 
 class CheckImageAPI(MethodView):
-    def post(self):
-        data = request.get_json()
-        body = data.get('body')
-        recognization_result = recognizeLitterCNN(body)
+    def post(self, country_id):
+        json_data = request.get_json()["body"]
+        result = pretrained_cnn(json_data)
         response = {
-            'result': recognization_result
+            'result': str(result)
         }
-        response.status_code = 201
         return response
 
 
