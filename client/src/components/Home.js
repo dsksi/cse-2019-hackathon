@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as cocoSsd from '@tensorflow-models/coco-ssd'
 
 export default class Home extends Component {
+  
   constructor(props) {
     super(props);
     this.state = { 
