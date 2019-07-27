@@ -1,23 +1,43 @@
 import React, { Component } from "react";
-import ImageUploader from 'react-images-upload';
+import * as cocoSsd from '@tensorflow-models/coco-ssd'
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
-     this.state = { pictures: [] };
-     this.onDrop = this.onDrop.bind(this);
+    this.state = { 
+      picture: null,
+      tempData: {},
+    };
   }
 
-  onDrop(picture) {
+  onDrop = (event) => {
     this.setState({
-        pictures: this.state.pictures.concat(picture),
+        picture: URL.createObjectURL(event.target.files[0]),
     });
-}
+    
+    this.predict();
+  }
+  
+
+
+  async predict() {
+    const image = document.getElementById('image');
+
+    // Load the model.
+    const model = await cocoSsd.load();
+    // Classify the image.
+    const predictions = await model.detect(image);
+
+    console.log('Predictions: ');
+    console.log(predictions);
+  }
+
   render() {
     return (
       <div>
         <h1>Little litters!!!</h1>
         <p>upload image here</p>
+<<<<<<< HEAD
         <ImageUploader
             withIcon={true}
             withPreview={true}
@@ -27,8 +47,11 @@ export default class Home extends Component {
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
             maxFileSize={5242880}
         />
+=======
+        <input type="file" onChange={this.onDrop}/>
+        <img id="image" alt="no uploaded images" src={this.state.picture}/>
+>>>>>>> 6de43db319098b37711de1c893f1d49167c20343
       </div>
-
     );
   }
 }
