@@ -1,12 +1,20 @@
 from testpy.models import *
 
 
-def label_schema(label):
-    recycling = Recycling.query.get(label.id)
-    method = RecyclingMethod.query.get(recycling.method_id)
+def country_schema(country):
+    return {
+        'id': country.id,
+        'country': country.country
+    }
+
+
+def label_schema(label, country):
+    recycling = Recycling.query.get((label.id, country.id))
+    method = RecyclingMethod.query.get((recycling.method_id, country.id))
     return {
         'id': label.id,
         'label': label.label,
+        'country': country.country,
         'recycling_method': method_schema(method)
     }
 
