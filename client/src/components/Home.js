@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ImageUploader from 'react-images-upload'
 import * as cocoSsd from '@tensorflow-models/coco-ssd'
 import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
 
 export default class Home extends Component {
   constructor(props) {
@@ -18,6 +19,14 @@ export default class Home extends Component {
       };
      this.onDrop = this.onDrop.bind(this);
 	}
+
+  componentDidMount() {
+    if (window.localStorage.country) {
+      this.setState({
+        country: window.localStorage.country,
+      });
+    }
+  }
 
 	onDrop(pictureFiles, pictureDataURLs) {
 		this.setState({
@@ -53,7 +62,7 @@ export default class Home extends Component {
     // Load the model.
     const model = await cocoSsd.load();
     // Classify the image.
-    const predictions = await model.detect(image[1]); //
+    const predictions = await model.detect(image[1]);
 
     if (predictions.length === 0) {
       this.setState({
@@ -75,9 +84,13 @@ export default class Home extends Component {
     // get class
     for (let i = 0; i< this.state.objects.length; i++) {
       let obj = this.state.objects[i];
-      axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/label/${obj}`)
+      axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/label/${obj}/`)
       .then(response => {
-        console.log(response.data);
+        console.log(response.data.recycling_method.method);
+        this.setState({
+          classesStr: this.state.classesStr.concat(response.data.recycling_method.method) + ' ',
+          classes: this.state.classes.concat(response.data.recycling_method.method),
+        })
       })
       .catch(error => {
         console.log(error);
@@ -88,8 +101,12 @@ export default class Home extends Component {
     render() {
         return (
           <div>
-            <h1>Object: {this.state.objectsStr} </h1>
-            <h1>Classes: {this.state.classesStr} </h1>
+            <Typography variant="h4" gutterBottom>
+              Object: {this.state.objectsStr} 
+            </Typography>
+            <Typography variant="h4" gutterBottom>
+              Classes: {this.state.classesStr}
+            </Typography>
             <ImageUploader
                 	withIcon={true}
                 	buttonText='Choose images'
