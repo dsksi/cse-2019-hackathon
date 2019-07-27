@@ -5,7 +5,11 @@ from testpy.models import *
 def readRecyclingCSV(filepath, db):
     with open(filepath) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
         for row in csv_reader:
+            if line_count == 0:
+                line_count += 1
+                continue
             col_count = 0
             for col in row:
                 if col != '':
@@ -21,7 +25,11 @@ def readRecyclingCSV(filepath, db):
 def readItemLableCSV(filepath, db):
     with open(filepath) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
         for row in csv_reader:
+            if line_count == 0:
+                line_count += 1
+                continue
             db.session.add(RecyclingLabel(
                         id=row[0],
                         label=row[1]))
