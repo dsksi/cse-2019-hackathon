@@ -99,6 +99,7 @@ function NavBar() {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
+        style={{ background: '#00c853' }}
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -151,14 +152,14 @@ function NavBar() {
             <ListItemText primary='Language' />
           </ListItem>
           <ListItem component={RouterLink} to="/country" button key='Country'>
-            <ListItemIcon> <MyLocation /></ListItemIcon>
+            <ListItemIcon><MyLocation /></ListItemIcon>
             <ListItemText primary='Country' />
           </ListItem>
         </List>
         <Divider />
         <List>
           <ListItem component={RouterLink} to="/about" button key='About'>
-            <ListItemIcon> <MailIcon /></ListItemIcon>
+            <ListItemIcon><MailIcon /></ListItemIcon>
             <ListItemText primary='About' />
           </ListItem>
         </List>
