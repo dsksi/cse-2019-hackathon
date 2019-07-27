@@ -28,3 +28,9 @@ def method_schema(method):
         'detail': method.detail,
         'picture_link': method.picture_link
     }
+
+def volunteer_schema(volunteer_image):
+    return {
+        'id': volunteer_image.id,
+        'image_link': volunteer_image.image_link
+    }

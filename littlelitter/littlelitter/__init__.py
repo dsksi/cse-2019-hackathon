@@ -52,6 +52,7 @@ def register_commands(app):
     def createdb():
         readCountryCSV(os.path.join(os.path.dirname(__file__), 'data/country.csv'), db)
         readItemLableCSV(os.path.join(os.path.dirname(__file__), "data/recycling_label.csv"), db)
+        readVolunteerCSV(os.path.join(os.path.dirname(__file__), "data/volunteer_images.csv"), db)
 
         # aus
         readClassification(os.path.join(os.path.dirname(__file__), "data/aus/aus_recycling_method.csv"), db, 0)

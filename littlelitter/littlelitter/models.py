@@ -34,7 +34,6 @@ class CountryRecyclingMethod(db.Model):
     method_id = db.Column(db.Integer, db.ForeignKey(RecyclingMethod.id))
 
 
-
 class Recycling(db.Model):
     __table_args__ = (
         PrimaryKeyConstraint('label_id', 'country_id'),
@@ -43,3 +42,8 @@ class Recycling(db.Model):
     label_id = db.Column(db.Integer, db.ForeignKey(RecyclingLabel.id))
     method_id = db.Column(db.Integer, db.ForeignKey(RecyclingMethod.id))
     country_id = db.Column(db.Integer, db.ForeignKey(Country.id))
+
+
+class VolunteerImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image_link = db.Column(db.Text)

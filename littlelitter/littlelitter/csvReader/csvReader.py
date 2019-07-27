@@ -78,4 +78,19 @@ def readRecyclingCSV(filepath, db, country_id):
         print(f'Finished adding recycling')
 
 
-
+def readVolunteerCSV(filepath, db):
+    with open(filepath) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+        for row in csv_reader:
+            print(f'adding {row}')
+            if line_count == 0:
+                line_count += 1
+                continue
+            if row != '':
+                db.session.add(VolunteerImage(
+                    id=row[0],
+                    image_link=row[1]
+                ))
+        db.session.commit()
+        print(f'Finished adding labels')
