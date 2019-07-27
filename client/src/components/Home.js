@@ -27,7 +27,7 @@ export default class Home extends Component {
             maxFileSize={5242880}
         />
       </div>
-
     );
   }
 }
+

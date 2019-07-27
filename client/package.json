@@ -9,7 +9,8 @@
     "react-dom": "^16.8.6",
     "react-images-upload": "^1.2.7",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "react-zoomable-image-updated": "^1.1.10"
   },
   "scripts": {
     "start": "react-scripts start",
