@@ -25,6 +25,7 @@ export default class Home extends Component {
       const model = await cocoSsd.load();
       // Classify the image.
       const predictions = await model.detect(image[1]);
+      console.log(image[1].currentSrc);
       if (predictions.length === 0) {
         this.setState({
           type: 1,
