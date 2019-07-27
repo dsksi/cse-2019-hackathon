@@ -16,6 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "aws s3 sync build/ s3://cse-2019-hackathon-little-litters --delete",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
