@@ -8,12 +8,12 @@
 from flask import jsonify, request, current_app, url_for, g
 from flask.views import MethodView
 
-from todoism.apis.v1 import api_v1
-from todoism.apis.v1.auth import auth_required, generate_token
-from todoism.apis.v1.errors import api_abort, ValidationError
-from todoism.apis.v1.schemas import user_schema, item_schema, items_schema
-from todoism.extensions import db
-from todoism.models import User, Item
+from littlelitter.apis.v1 import api_v1
+from littlelitter.apis.v1.auth import auth_required, generate_token
+from littlelitter.apis.v1.errors import api_abort, ValidationError
+from littlelitter.apis.v1.schemas import user_schema, item_schema, items_schema
+from littlelitter.extensions import db
+from littlelitter.models import User, Item
 
 
 def get_item_body():

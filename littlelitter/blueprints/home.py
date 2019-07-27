@@ -9,7 +9,7 @@ from flask import render_template, Blueprint, current_app, make_response, jsonif
 from flask_babel import _
 from flask_login import current_user
 
-from todoism.extensions import db
+from littlelitter.extensions import db
 
 home_bp = Blueprint('home', __name__)
 

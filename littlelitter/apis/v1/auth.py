@@ -10,8 +10,8 @@ from functools import wraps
 from flask import g, current_app, request
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired
 
-from todoism.apis.v1.errors import api_abort, invalid_token, token_missing
-from todoism.models import User
+from littlelitter.apis.v1.errors import api_abort, invalid_token, token_missing
+from littlelitter.models import User
 
 
 def generate_token(user):

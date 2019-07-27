@@ -9,8 +9,8 @@ from flask import render_template, request, Blueprint, jsonify
 from flask_babel import _
 from flask_login import current_user, login_required
 
-from todoism.extensions import db
-from todoism.models import Item
+from littlelitter.extensions import db
+from littlelitter.models import Item
 
 todo_bp = Blueprint('todo', __name__)
 

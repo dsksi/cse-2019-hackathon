@@ -10,8 +10,8 @@ from flask import render_template, redirect, url_for, Blueprint, request, jsonif
 from flask_babel import _
 from flask_login import login_user, logout_user, login_required, current_user
 
-from todoism.extensions import db
-from todoism.models import User, Item
+from littlelitter.extensions import db
+from littlelitter.models import User, Item
 
 auth_bp = Blueprint('auth', __name__)
 fake = Faker()

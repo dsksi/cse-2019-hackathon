@@ -7,7 +7,7 @@
 """
 from flask import url_for
 
-from todoism.models import Item
+from littlelitter.models import Item
 
 
 def user_schema(user):
