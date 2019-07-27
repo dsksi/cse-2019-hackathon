@@ -1,6 +1,6 @@
 import click
 import os
-from flask import request, url_for, jsonify
+from flask import Flask, request, url_for, jsonify
 from flask_api import FlaskAPI, status, exceptions
 from littlelitter.csvReader.csvReader import *
 from littlelitter.schemas import *
@@ -10,13 +10,18 @@ from littlelitter.settings import config
 
 
 def create_app(config_name=None):
-    app = FlaskAPI(__name__)
+
 
     # load config
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
-    app.config.from_object(config[config_name])
 
+    if config_name == 'development':
+        app = FlaskAPI(__name__)
+    else:
+        app = Flask(__name__)
+
+    app.config.from_object(config[config_name])
     register_router(app)
     register_extensions(app)
     register_commands(app)
