@@ -1,10 +1,13 @@
 from littlelitter.models import *
+from flask import jsonify
 
 
 def country_schema(country):
+    methods = RecyclingMethod.query.filter(RecyclingMethod.country_id == country.id)
     return {
         'id': country.id,
-        'country': country.country
+        'country': country.country,
+        'methods': [method_schema(method) for method in methods]
     }
 
 
