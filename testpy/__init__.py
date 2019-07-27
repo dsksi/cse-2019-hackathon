@@ -3,7 +3,7 @@ import os
 from flask import request, url_for, jsonify
 from flask_api import FlaskAPI, status, exceptions
 from testpy.csvReader.csvReader import *
-
+from testpy.schemas import *
 from testpy.extensions import *
 from testpy.models import *
 from testpy.settings import config
@@ -23,27 +23,20 @@ def create_app(config_name=None):
     return app
 
 
-def recyclingMethodSchema(key):
-    method = RecyclingMethod.query.get(key)
-    return {
-        'url': request.host_url.rstrip('/') + url_for('notes_detail', key=key),
-        'method': method.method,
-        'detail': method.detail,
-        'picture_link': method.picture_link
-    }
-
-
 def register_router(app):
     @app.route("/", methods=['GET'])
-    def notes_list():
-        return [recyclingMethodSchema(method.id) for method in RecyclingMethod.query.all()]
+    def index():
+        return [method_schema(method) for method in RecyclingMethod.query.all()]
 
+    @app.route("/method/<int:method_id>/", methods=['GET'])
+    def method_detail(method_id):
+        method = RecyclingMethod.query.get(method_id)
+        return method_schema(method)
 
-    @app.route("/recycling_method/<int:key>/", methods=['GET'])
-    def notes_detail(key):
-        #if key not in recyclingMethods:
-        #    raise exceptions.NotFound()
-        return recyclingMethodSchema(key)
+    @app.route("/label/<int:label_id>/", methods=['GET'])
+    def label_detail(label_id):
+        label = RecyclingLabel.query.get(label_id)
+        return label_schema(label)
 
 
 def register_extensions(app):
@@ -78,5 +71,6 @@ def register_commands(app):
                                        picture_link="https://www.unley.sa.gov.au/CityOfUnley/media/CoU-Media-Library/Waste%20and%20Recycling/Yellow-bin-img.jpg"))
         db.session.commit()
 
-        readItemLableCSV("aus_recycling.csv", db)
+        readRecyclingCSV("data/aus_recycling.csv", db)
+        readItemLableCSV("data/recycling_label.csv", db)
 
