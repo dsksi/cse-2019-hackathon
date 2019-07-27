@@ -22,7 +22,8 @@ export default class Home extends Component {
        displayButton: "block",
        country: 0,
        id: 0,
-       preview: true
+       preview: true,
+       unknown: false
       };
      this.onDrop = this.onDrop.bind(this);
 	}
@@ -93,7 +94,6 @@ export default class Home extends Component {
       
   async predict() {
     const image = document.getElementsByTagName('img');
-    console.log(image)
     // Load the model.
     const model = await cocoSsd.load();
     // Classify the image.
@@ -104,8 +104,9 @@ export default class Home extends Component {
 
     if (predictions.length === 0) {
       this.setState({
-        type: 1,
+        objectsStr: "Unknow Object",
       })
+      return;
     } else {
       // add to objects
       predictions.forEach(p => {
@@ -162,7 +163,7 @@ export default class Home extends Component {
 
             </div>
             <Typography variant="h4" gutterBottom>
-              Garbage: {this.state.objectsStr} 
+              Garbage: {this.state.objectsStr}
             </Typography>
             <Typography variant="h4" gutterBottom>
               Classification: {this.state.classesStr}
