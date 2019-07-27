@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ImageUploader from 'react-images-upload'
 import * as cocoSsd from '@tensorflow-models/coco-ssd'
-//import axios from 'axios';
+import axios from 'axios';
 
 export default class Home extends Component {
   
