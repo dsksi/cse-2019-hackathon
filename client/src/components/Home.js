@@ -27,9 +27,9 @@ export default class Home extends Component {
 	}
 
   componentDidMount() {
-    if (window.localStorage.country) {
+    if (window.localStorage.getItem('country')) {
       this.setState({
-        country: window.localStorage.country,
+        country: window.localStorage.getItem('country'),
       });
     }
   }
@@ -39,6 +39,7 @@ export default class Home extends Component {
     this.setState({
       [name]: event.target.value,
     });
+    window.localStorage.setItem('country', event.target.value)
     if (this.state.pictures.length > 0) {
       this.setState({
         objectsStr: "",

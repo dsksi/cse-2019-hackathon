@@ -13,6 +13,13 @@ export default class Volunteer extends Component {
     labels:[],
     country: 0,
   }
+  componentWillMount() {
+    if (window.localStorage.getItem('country')) {
+      this.setState({
+        country: window.localStorage.getItem('country'),
+      })
+    }
+  }
   componentDidMount() {
     axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/volunteer/`)
       .then(res => {
@@ -31,11 +38,6 @@ export default class Volunteer extends Component {
         })
         console.log(this.state.labels)
       })
-    // if (window.localStorage.getItem('country')) {
-    //   this.setState({
-    //     country: window.localStorage.getItem('country'),
-    //   })
-    // }
   }
   render() {
     const updateImage = () =>{
