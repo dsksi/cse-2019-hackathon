@@ -1,5 +1,5 @@
 import csv
-from testpy.models import *
+from littlelitter.models import *
 
 
 def readCountryCSV(filepath, db):

@@ -1,49 +1,56 @@
-import os
 import click
-from flask import Flask, render_template, jsonify, request
-from flask_api import FlaskAPI
-
-from littlelitter.apis.v1 import api_v1
-
-from littlelitter.extensions import db, csrf
+import os
+from flask import request, url_for, jsonify
+from flask_api import FlaskAPI, status, exceptions
+from littlelitter.csvReader.csvReader import *
+from littlelitter.schemas import *
+from littlelitter.extensions import *
 from littlelitter.models import *
 from littlelitter.settings import config
 
 
 def create_app(config_name=None):
+    app = FlaskAPI(__name__)
+
+    # load config
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
-
-    app = FlaskAPI(__name__)
     app.config.from_object(config[config_name])
 
-    register_test(app)
+    register_router(app)
     register_extensions(app)
-    register_blueprints(app)
     register_commands(app)
-    register_errors(app)
     return app
+
+
+def register_router(app):
+    @app.route("/", methods=['GET'])
+    def index():
+        return [method_schema(method) for method in RecyclingMethod.query.all()]
+
+    @app.route("/country/", methods=['GET'])
+    def getCountries():
+        return [country_schema(country) for country in Country.query.all()]
+
+    @app.route("/country/<int:country_id>", methods=['GET'])
+    def getCountry(country_id):
+        country = Country.query.get(country_id)
+        return country_schema(country)
+
+    @app.route("/country/<int:country_id>/method/<int:method_id>/", methods=['GET'])
+    def method_detail(method_id):
+        method = RecyclingMethod.query.get(method_id)
+        return method_schema(method)
+
+    @app.route("/country/<int:country_id>/label/<int:label_id>/", methods=['GET'])
+    def label_detail(country_id, label_id):
+        label = RecyclingLabel.query.get(label_id)
+        country = Country.query.get(country_id)
+        return label_schema(label, country)
 
 
 def register_extensions(app):
     db.init_app(app)
-    csrf.init_app(app)
-    csrf.exempt(api_v1)
-
-
-def register_blueprints(app):
-    app.register_blueprint(api_v1, url_prefix='/api/v1')
-    # app.register_blueprint(api_v1, url_prefix='/v1', subdomain='api')  # enable subdomain support
-
-
-def register_test(app):
-    # TODO this is mainly for testing
-    pass
-
-
-def register_errors(app):
-    # TODO error handling
-    pass
 
 
 def register_commands(app):
@@ -57,3 +64,18 @@ def register_commands(app):
             click.echo('Drop tables.')
         db.create_all()
         click.echo('Initialized database.')
+
+    @app.cli.command()
+    def createdb():
+        readCountryCSV("data/country.csv", db)
+        readItemLableCSV("data/recycling_label.csv", db)
+
+        # aus
+        readClassification("data/aus/aus_recycling_method.csv", db, 0)
+        readRecyclingCSV("data/aus/aus_recycling.csv", db, 0)
+
+        # sh
+        readClassification("data/sh/sh_recycling_method.csv", db, 1)
+        readRecyclingCSV("data/sh/sh_recycling.csv", db, 1)
+
+

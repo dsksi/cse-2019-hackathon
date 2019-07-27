@@ -1,4 +1,4 @@
-from testpy.models import *
+from littlelitter.models import *
 
 
 def country_schema(country):
