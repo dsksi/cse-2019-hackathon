@@ -21,6 +21,7 @@ export default class Home extends Component {
         <ImageUploader
             withIcon={true}
             withPreview={true}
+            singleImage={true}
             buttonText='Choose images'
             onChange={this.onDrop}
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
