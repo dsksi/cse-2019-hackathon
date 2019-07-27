@@ -21,6 +21,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MyLocation from '@material-ui/icons/MyLocation';
 import MailIcon from '@material-ui/icons/Mail';
 import Routes from "./Routes";
+import { Link as RouterLink, withRouter } from 'react-router-dom'
+
 
 const drawerWidth = 200;
 
@@ -80,7 +82,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function NavBar() {
+function NavBar() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -133,21 +135,25 @@ export default function NavBar() {
         </div>
         <Divider />
         <List>
-          {['Image upload', 'Volunteer'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <CloudUpload /> : <People />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem component={RouterLink} to="/" button key='Image upload'>
+            <ListItemIcon><CloudUpload /></ListItemIcon>
+            <ListItemText primary='Image upload' />
+          </ListItem>
+          <ListItem button key='Volunteer'>
+            <ListItemIcon><People /></ListItemIcon>
+            <ListItemText primary='Volunteer' />
+          </ListItem>
         </List>
         <Divider />
         <List>
-          {['Language', 'Country'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <Language /> : <MyLocation />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key='Language'>
+            <ListItemIcon><Language /></ListItemIcon>
+            <ListItemText primary='Language' />
+          </ListItem>
+          <ListItem component={RouterLink} to="/country" button key='Country'>
+            <ListItemIcon> <MyLocation /></ListItemIcon>
+            <ListItemText primary='Country' />
+          </ListItem>
         </List>
         <Divider />
         <List>
@@ -183,3 +189,5 @@ export default function NavBar() {
     </div>
   );
 }
+
+export default withRouter(NavBar);
