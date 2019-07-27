@@ -7,15 +7,17 @@ import './volunteer.css';
 
 
 export default class Country extends Component {
+  handleClick = (e, id) => {
+    e.preventDefault();
+    if (id === 0) {
+      window.location.replace('https://en.wikipedia.org/wiki/Recycling_in_Australia')
+    } else if (id === 1) {
+      window.location.replace('https://www.healthandsafetyinshanghai.com/recycling-in-shanghai.html')
+    }
+   
+    
+  }
   render() {
-    // const sh = document.getElementById("1");
-    // const syd = document.getElementById("0");
-    // sh.addEventListener('click', event => ({
-      
-    // }))
-    // syd.addEventListener('click', event => ({
-      
-    // }))
     return (
       <div>
   <Card>
@@ -29,7 +31,7 @@ export default class Country extends Component {
       </CardContent>
     </CardActionArea>
     <CardActions className="container">
-      <input size="small" className="input-button" id="0" type="button" value="Learn More" />
+      <input size="small" className="input-button" id="0" type="button" value="Learn More" onClick={((e)=> this.handleClick(e, 0))}/>
     </CardActions>
   </Card>
   <Card>
@@ -43,7 +45,7 @@ export default class Country extends Component {
       </CardContent>
     </CardActionArea>
     <CardActions className="container">
-      <input size="small" className="input-button" id="1" type="button" value="Learn More" />
+      <input size="small" className="input-button" id="1" type="button" value="Learn More" onClick={((e)=> this.handleClick(e, 1))} />
     </CardActions>
   </Card>
   </div>
