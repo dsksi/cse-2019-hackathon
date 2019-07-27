@@ -8,6 +8,7 @@ export default class Home extends Component {
     this.state = { 
       picture: null,
       tempData: {},
+      type: null,
     };
   }
 
@@ -28,14 +29,20 @@ export default class Home extends Component {
     const model = await cocoSsd.load();
     // Classify the image.
     const predictions = await model.detect(image);
-
-    console.log('Predictions: ');
-    console.log(predictions);
+    if (predictions.length === 0) {
+      this.setState({
+        type: 1,
+      })
+    } else {
+      console.log('Predictions: ');
+      console.log(predictions);
+    }
   }
 
   render() {
     return (
       <div>
+        { this.state.type === 1 && <h2>Sorry, we can't recognise.</h2> }
         <h1>Little litters!!!</h1>
         <p>upload image here</p>
         <input type="file" onChange={this.onDrop}/>
