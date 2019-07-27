@@ -22,8 +22,7 @@ class RecyclingMethod(db.Model):
 
     method = db.Column(db.String(20), unique=True)
     detail = db.Column(db.Text)
-    picture_link = db.Column(db.String(100))
-
+    picture_link = db.Column(db.Text)
 
 
 class CountryRecyclingMethod(db.Model):
