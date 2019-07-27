@@ -4,15 +4,23 @@ import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 export default class Country extends Component {
   constructor(props) {
     super(props);
-     this.state = { country: '', region: '' };
+     this.state = { country: 0, region: '' };
   }
 
   selectCountry (val) {
     this.setState({ country: val });
+    window.localStorage.setItem('country', val);
   }
 
   selectRegion (val) {
     this.setState({ region: val });
+  }
+  componentDidMount() {
+    if (window.localStorage.getItem('country')) {
+      this.setState({
+        country: window.localStorage.getItem('country'),
+      })
+    }
   }
   render() {
     const { country, region } = this.state;

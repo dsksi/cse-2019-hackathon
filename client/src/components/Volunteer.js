@@ -1,24 +1,73 @@
 import React, { Component } from "react";
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import './volunteer.css';
 import axios from 'axios';
 
-export default class Home extends Component {
+
+export default class Volunteer extends Component {
   state = {
-    images: [],
-    // country: 
+    image:"",
+    labels:[],
+    country: 0,
   }
   componentDidMount() {
-    axios.get(`http://google.com`)
+    axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/volunteer/`)
       .then(res => {
-        const images = res.data;
-        this.setState({ images });
+        const link = res.data.volunteer;
+        this.setState({ 
+          image: link
+        });
+        console.log(link)
     })
+    axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/`)
+      .then(res => {
+        res.data.methods.forEach(method => {
+          this.setState({
+            labels: this.state.labels.concat(method.method)
+          })
+        })
+        console.log(this.state.labels)
+      })
+    // if (window.localStorage.getItem('country')) {
+    //   this.setState({
+    //     country: window.localStorage.getItem('country'),
+    //   })
+    // }
   }
   render() {
+    const updateImage = () =>{
+      axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/volunteer/`)
+      .then(res => {
+        const link = res.data.volunteer;
+        this.setState({ 
+          image: link
+        });
+        // console.log(link)
+    })
+    }
+
     return (
-      <div>
-
-      </div>
-
+      <Card>
+      <CardActionArea>
+        <img
+          alt="No images to be recognized"
+          src={this.state.image.image_link}
+          className="imageSize"
+        />
+        <CardContent>
+        </CardContent>
+      </CardActionArea>
+      <CardActions className="container">
+        {this.state.labels.map(label => {
+          return (
+            <input size="small" className="input-button" value={label} type="button" key={label} onClick={updateImage}/>
+          )})}
+        <input size="small" className="input-button" value="Next" type="button" key="Next" onClick={updateImage}/>
+      </CardActions>
+    </Card>
     );
   }
 }

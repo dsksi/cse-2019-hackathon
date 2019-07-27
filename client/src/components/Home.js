@@ -75,7 +75,7 @@ export default class Home extends Component {
     // get class
     for (let i = 0; i< this.state.objects.length; i++) {
       let obj = this.state.objects[i];
-      axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/label/${obj}`)
+      axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/label/${obj}/`)
       .then(response => {
         console.log(response.data);
       })

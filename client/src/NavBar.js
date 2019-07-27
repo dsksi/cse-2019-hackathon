@@ -140,7 +140,7 @@ function NavBar() {
             <ListItemIcon><CloudUpload /></ListItemIcon>
             <ListItemText primary='Image upload' />
           </ListItem>
-          <ListItem button key='Volunteer'>
+          <ListItem component={RouterLink} to="/volunteer" button key='Volunteer'>
             <ListItemIcon><People /></ListItemIcon>
             <ListItemText primary='Volunteer' />
           </ListItem>
