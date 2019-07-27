@@ -1,25 +1,52 @@
 import React, { Component } from "react";
-// import ImageUploader from 'react-images-upload';
+import * as cocoSsd from '@tensorflow-models/coco-ssd'
 
 export default class Home extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      file: null
-    }
-  }  
-  handleChange=(event)=> {
+  
+  constructor(props) {
+    super(props);
+    this.state = { 
+      picture: null,
+      tempData: {},
+      type: null,
+    };
+  }
+
+  onDrop = (event) => {
     this.setState({
-      file: URL.createObjectURL(event.target.files[0])
-    })
-  }  
+        picture: URL.createObjectURL(event.target.files[0]),
+    });
+    
+    this.predict();
+  }
+  
+
+
+  async predict() {
+    const image = document.getElementById('image');
+
+    // Load the model.
+    const model = await cocoSsd.load();
+    // Classify the image.
+    const predictions = await model.detect(image);
+    if (predictions.length === 0) {
+      this.setState({
+        type: 1,
+      })
+    } else {
+      console.log('Predictions: ');
+      console.log(predictions);
+    }
+  }
+
   render() {
     return (
       <div>
-        <input type="file" onChange={this.handleChange}/>
-
-        <img src={this.state.file}/>
-        
+        { this.state.type === 1 && <h2>Sorry, we can't recognise.</h2> }
+        <h1>Little litters!!!</h1>
+        <p>upload image here</p>
+        <input type="file" onChange={this.onDrop}/>
+        <img id="image" alt="no uploaded images" src={this.state.picture}/>
       </div>
     );
   }
