@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import ImageUploader from 'react-images-upload';
 import * as cocoSsd from '@tensorflow-models/coco-ssd'
-
-import cup from '../cup.jpeg';
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { 
       picture: null,
+      tempData: {},
     };
   }
 
