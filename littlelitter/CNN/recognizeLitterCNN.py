@@ -18,7 +18,7 @@ def pretrained_cnn(img64):
 	img = open_image(io.BytesIO(imgdata))
 	pred_class, pred_idx, outputs  = learn.predict(img)
 	if outputs[pred_idx].item() <= 0.6:
-		return "I am not sure"
+		return "Maybe this is not recyclable."
 	else:
 		return pred_class
 
