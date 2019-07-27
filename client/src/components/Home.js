@@ -3,6 +3,12 @@ import ImageUploader from 'react-images-upload'
 import * as cocoSsd from '@tensorflow-models/coco-ssd'
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+// import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import Input from '@material-ui/core/Input';
 
 export default class Home extends Component {
   constructor(props) {
@@ -27,6 +33,24 @@ export default class Home extends Component {
       });
     }
   }
+
+  handleChange = event => {
+    var name = [event.target.id];
+    this.setState({
+      [name]: event.target.value,
+    });
+    if (this.state.pictures.length > 0) {
+      this.setState({
+        objectsStr: "",
+        objects: [],
+      })
+      this.setState({
+        classesStr: "",
+        classes: [],
+      })
+      this.predict();
+    }
+  };
 
 	onDrop(pictureFiles, pictureDataURLs) {
 		this.setState({
@@ -82,7 +106,7 @@ export default class Home extends Component {
     }
 
     // get class
-    for (let i = 0; i< this.state.objects.length; i++) {
+    for (let i = 0; i < this.state.objects.length; i++) {
       let obj = this.state.objects[i];
       axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/label/${obj}/`)
       .then(response => {
@@ -101,6 +125,28 @@ export default class Home extends Component {
     render() {
         return (
           <div>
+            <div>
+
+            <FormControl>
+              <InputLabel shrink htmlFor="age-native-label-placeholder">
+              Location
+              </InputLabel>
+              <NativeSelect
+                value={this.state.country}
+                onChange={this.handleChange}
+                input={<Input name="country" id="country" />}
+              >
+                <option value={0}>Sydney</option>
+                <option value={1}>Shanghai</option>
+                <option value={0}>More...</option>
+              </NativeSelect>
+              <FormHelperText></FormHelperText>
+            </FormControl>
+            <br/>
+            <br/>
+            <br/>
+
+            </div>
             <Typography variant="h4" gutterBottom>
               Object: {this.state.objectsStr} 
             </Typography>
