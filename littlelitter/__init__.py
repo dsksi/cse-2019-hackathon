@@ -1,6 +1,7 @@
 import os
 import click
 from flask import Flask, render_template, jsonify, request
+from flask_api import FlaskAPI
 
 from littlelitter.apis.v1 import api_v1
 
@@ -13,10 +14,10 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
-    app = Flask('todoism')
+    app = FlaskAPI(__name__)
     app.config.from_object(config[config_name])
 
-    register_index(app)
+    register_test(app)
     register_extensions(app)
     register_blueprints(app)
     register_commands(app)
@@ -35,11 +36,9 @@ def register_blueprints(app):
     # app.register_blueprint(api_v1, url_prefix='/v1', subdomain='api')  # enable subdomain support
 
 
-def register_index(app):
+def register_test(app):
     # TODO this is mainly for testing
-    @app.route("/", methods=['GET', 'POST'])
-    def notes_list():
-        return "this is the index"
+    pass
 
 
 def register_errors(app):
