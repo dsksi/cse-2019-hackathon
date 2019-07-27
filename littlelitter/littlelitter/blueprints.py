@@ -1,3 +1,4 @@
+from CNN import recognizeLitterCNN
 from flask_cors import CORS
 from flask import Blueprint, jsonify, request
 from flask.views import MethodView
@@ -51,10 +52,11 @@ class CheckImageAPI(MethodView):
     def post(self):
         data = request.get_json()
         body = data.get('body')
-
-        response = jsonify(item_schema(item))
+        recognization_result = recognizeLitterCNN(body)
+        response = {
+            'result': recognization_result
+        }
         response.status_code = 201
-        response.headers['Location'] = url_for('.item', item_id=item.id, _external=True)
         return response
 
 
@@ -64,3 +66,4 @@ api_v1.add_url_rule('/country/<int:country_id>/', view_func=GetCountryAPI.as_vie
 api_v1.add_url_rule('/country/<int:country_id>/method/<int:method_id>/', view_func=GetMethodAPI.as_view('getMethod'), methods=['GET'])
 api_v1.add_url_rule('/country/<int:country_id>/label/<string:label>/', view_func=GetLabelAPI.as_view('getLabel'), methods=['GET'])
 api_v1.add_url_rule('/country/<int:country_id>/volunteer/', view_func=GetVolunteerAPI.as_view('getVolunteer'), methods=['GET'])
+api_v1.add_url_rule('/country/<int:country_id>/image/', view_func=CheckImageAPI.as_view('checkImage'), methods=['POST'])
