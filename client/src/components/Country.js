@@ -24,7 +24,7 @@ export default class Country extends Component {
           onChange={(val) => this.selectCountry(val)} />
         <p>Select Region</p>
         <RegionDropdown
-          value={country}
+          country={country}
           value={region}
           onChange={(val) => this.selectRegion(val)} />
       </div>
