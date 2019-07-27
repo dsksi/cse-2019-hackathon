@@ -1,6 +1,11 @@
 from testpy.extensions import db
 
 
+class Country(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    country = db.Column(db.String(20), unique=True)
+
+
 class RecyclingLabel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(20), unique=True)
@@ -13,6 +18,12 @@ class RecyclingMethod(db.Model):
     picture_link = db.Column(db.String(100))
 
 
-class Recycling(db.Model):
-    label_id = db.Column(db.Integer, db.ForeignKey(RecyclingLabel.id), primary_key=True)
+class CountryRecyclingMethod(db.Model):
+    country_id = db.Column(db.Integer, db.ForeignKey(Country.id))
     method_id = db.Column(db.Integer, db.ForeignKey(RecyclingMethod.id))
+
+
+class Recycling(db.Model):
+    label_id = db.Column(db.Integer, db.ForeignKey(RecyclingLabel.id))
+    method_id = db.Column(db.Integer, db.ForeignKey(RecyclingMethod.id))
+    coutry_id = db.Column(db.Integer, db.ForeignKey(Country.id))
