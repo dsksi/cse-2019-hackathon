@@ -13,7 +13,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import People from '@material-ui/icons/People';
-import Language from '@material-ui/icons/Language';
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -140,29 +139,24 @@ function NavBar() {
             <ListItemIcon><CloudUpload /></ListItemIcon>
             <ListItemText primary='Image upload' />
           </ListItem>
-          <ListItem button key='Volunteer'>
+          <ListItem component={RouterLink} to="/volunteer" button key='Volunteer'>
             <ListItemIcon><People /></ListItemIcon>
             <ListItemText primary='Volunteer' />
           </ListItem>
         </List>
         <Divider />
         <List>
-          <ListItem button key='Language'>
-            <ListItemIcon><Language /></ListItemIcon>
-            <ListItemText primary='Language' />
-          </ListItem>
           <ListItem component={RouterLink} to="/country" button key='Country'>
             <ListItemIcon><MyLocation /></ListItemIcon>
             <ListItemText primary='Country' />
           </ListItem>
-        </List>
-        <Divider />
-        <List>
           <ListItem component={RouterLink} to="/about" button key='About'>
             <ListItemIcon><MailIcon /></ListItemIcon>
             <ListItemText primary='About' />
           </ListItem>
         </List>
+        <Divider />
+
       </Drawer>
       <main
         className={clsx(classes.content, {

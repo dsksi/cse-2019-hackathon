@@ -3,6 +3,12 @@ import ImageUploader from 'react-images-upload'
 import * as cocoSsd from '@tensorflow-models/coco-ssd'
 import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+// import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import Input from '@material-ui/core/Input';
 
 export default class Home extends Component {
   constructor(props) {
@@ -16,17 +22,39 @@ export default class Home extends Component {
        displayButton: "block",
        country: 0,
        id: 0,
+       preview: true,
+       unknown: false
       };
      this.onDrop = this.onDrop.bind(this);
 	}
 
   componentDidMount() {
-    if (window.localStorage.country) {
+    if (window.localStorage.getItem('country')) {
       this.setState({
-        country: window.localStorage.country,
+        country: window.localStorage.getItem('country'),
       });
     }
   }
+
+  // handle location change
+  handleChange = event => {
+    var name = [event.target.id];
+    this.setState({
+      [name]: event.target.value,
+    });
+    window.localStorage.setItem('country', event.target.value)
+    this.setState({
+      objectsStr: "",
+      objects: [],
+      classesStr: "",
+      classes: [],
+      pictures: [],
+    })
+    
+    if (this.state.pictures.length > 0) {
+      this.predict();
+    }
+  };
 
 	onDrop(pictureFiles, pictureDataURLs) {
 		this.setState({
@@ -42,7 +70,9 @@ export default class Home extends Component {
         displayButton: "block",
       });
     }
-    if (pictureFiles.length > 0) {
+
+    
+    if (pictureFiles.length >= 1) {
       this.setState({
         objectsStr: "",
         objects: [],
@@ -53,21 +83,30 @@ export default class Home extends Component {
       })
       this.predict();
     }
-
+    
+    if (pictureFiles.length !== 0) { 
+      pictureFiles = []; 
+      this.setState({
+        pictures: [],
+      });
+    }
   }
       
   async predict() {
     const image = document.getElementsByTagName('img');
-    console.log(image)
     // Load the model.
     const model = await cocoSsd.load();
     // Classify the image.
+    if (image[1] === null) {
+      return;
+    }
     const predictions = await model.detect(image[1]);
 
     if (predictions.length === 0) {
       this.setState({
-        type: 1,
+        objectsStr: "Unknow Object",
       })
+      return;
     } else {
       // add to objects
       predictions.forEach(p => {
@@ -82,7 +121,7 @@ export default class Home extends Component {
     }
 
     // get class
-    for (let i = 0; i< this.state.objects.length; i++) {
+    for (let i = 0; i < this.state.objects.length; i++) {
       let obj = this.state.objects[i];
       axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/label/${obj}/`)
       .then(response => {
@@ -101,11 +140,33 @@ export default class Home extends Component {
     render() {
         return (
           <div>
+            <div>
+
+            <FormControl>
+              <InputLabel shrink htmlFor="age-native-label-placeholder">
+              Location
+              </InputLabel>
+              <NativeSelect
+                value={this.state.country}
+                onChange={this.handleChange}
+                input={<Input name="country" id="country" />}
+              >
+                <option value={0}>Sydney</option>
+                <option value={1}>Shanghai</option>
+                <option value={0}>More...</option>
+              </NativeSelect>
+              <FormHelperText></FormHelperText>
+            </FormControl>
+            <br/>
+            <br/>
+            <br/>
+
+            </div>
             <Typography variant="h4" gutterBottom>
-              Object: {this.state.objectsStr} 
+              Garbage: {this.state.objectsStr}
             </Typography>
             <Typography variant="h4" gutterBottom>
-              Classes: {this.state.classesStr}
+              Classification: {this.state.classesStr}
             </Typography>
             <ImageUploader
                 	withIcon={true}
@@ -113,7 +174,7 @@ export default class Home extends Component {
                 	onChange={this.onDrop}
                 	imgExtension={['.jpg', '.jpeg', '.gif', '.png', '.gif']}
                   maxFileSize={5242880}
-                  withPreview={true}
+                  withPreview={this.state.preview}
                   buttonStyles={{ display: this.state.displayButton }}
             />
           </div>
