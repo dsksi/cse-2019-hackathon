@@ -157,10 +157,12 @@ function NavBar() {
         </List>
         <Divider />
         <List>
-          <ListItem component={RouterLink} to="/about" button key='About'>
-            <ListItemIcon> <MailIcon /></ListItemIcon>
-            <ListItemText primary='About' />
-          </ListItem>
+          {['About'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 1 === 0 ? <MailIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
         </List>
       </Drawer>
       <main

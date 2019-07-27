@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import * as cocoSsd from '@tensorflow-models/coco-ssd'
+import * as cocoSsd from '@tensorflow-models/coco-ssd';
+import './home.css';
 
 export default class Home extends Component {
   constructor(props) {
@@ -33,16 +34,18 @@ export default class Home extends Component {
         type: 1,
       })
     } else {
+      this.setState({
+        type: null,
+      })
       console.log('Predictions: ');
       console.log(predictions);
     }
   }
-
   render() {
     let width = window.outerWidth * 0.8;
     console.log(window.outerWidth)
     return (
-      <div>
+      <div className="div-border">
         { this.state.type === 1 && <h2>Sorry, we can't recognise.</h2> }
         <h1>Little litters!!!</h1>
         <p>upload image here</p>
