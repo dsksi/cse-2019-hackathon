@@ -22,7 +22,7 @@ login_manager.login_message = _l('Please login to access this page.')
 
 @login_manager.user_loader
 def load_user(user_id):
-    from todoism.models import User
+    from littlelitter.models import User
     return User.query.get(int(user_id))
 
 
