@@ -32,6 +32,7 @@ export default class Country extends Component {
       <input size="small" className="input-button" id="0" type="button" value="Learn More" />
     </CardActions>
   </Card>
+  <br/>
   <Card>
     <CardActionArea>
       <img
