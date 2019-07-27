@@ -5,25 +5,17 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import './volunteer.css';
 
-export default class Country extends Component {
-  constructor(props) {
-    super(props);
-     this.state = { country: 0};
-  }
 
-  selectCountry (val) {
-    this.setState({ country: val });
-    window.localStorage.setItem('country', val);
-  }
-  componentDidMount() {
-    if (window.localStorage.getItem('country')) {
-      this.setState({
-        country: window.localStorage.getItem('country'),
-      })
-    }
-  }
+export default class Country extends Component {
   render() {
-    const country = this.state.country;
+    // const sh = document.getElementById("1");
+    // const syd = document.getElementById("0");
+    // sh.addEventListener('click', event => ({
+      
+    // }))
+    // syd.addEventListener('click', event => ({
+      
+    // }))
     return (
       <div>
   <Card>
