@@ -1,7 +1,6 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
-import NavBar from "./components/NavBar"
+import NavBar from "./NavBar"
 
 function App() {
   return (
@@ -21,7 +20,9 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-    <NavBar />
+    <div>
+      <NavBar />
+    </div>
   );
 }
 
