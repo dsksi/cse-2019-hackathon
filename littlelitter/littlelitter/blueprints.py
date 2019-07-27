@@ -1,5 +1,5 @@
 from flask_cors import CORS
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask.views import MethodView
 from littlelitter.schemas import *
 from littlelitter.models import *
@@ -37,6 +37,7 @@ class GetLabelAPI(MethodView):
         country = Country.query.get(country_id)
         return label_schema(label, country)
 
+
 class GetVolunteerAPI(MethodView):
     def get(self, country_id):
         volunteer_id = random.randint(0, 2)
@@ -44,6 +45,17 @@ class GetVolunteerAPI(MethodView):
         methods = RecyclingMethod.query.filter(RecyclingMethod.country_id == country_id)
         return {"volunteer": volunteer_schema(volunteer_image),
                 "methods": [method_schema(method) for method in methods]}
+
+
+class CheckImageAPI(MethodView):
+    def post(self):
+        data = request.get_json()
+        body = data.get('body')
+
+        response = jsonify(item_schema(item))
+        response.status_code = 201
+        response.headers['Location'] = url_for('.item', item_id=item.id, _external=True)
+        return response
 
 
 api_v1.add_url_rule('/', view_func=IndexAPI.as_view('index'), methods=['GET'])
