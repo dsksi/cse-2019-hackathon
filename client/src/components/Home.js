@@ -12,15 +12,15 @@ export default class Home extends Component {
     this.setState({
         pictures: this.state.pictures.concat(picture),
     });
-  }
+}
   render() {
     return (
       <div>
         <h1>Little litters!!!</h1>
         <p>upload image here</p>
-
         <ImageUploader
             withIcon={true}
+            withPreview={true}
             buttonText='Choose images'
             onChange={this.onDrop}
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
