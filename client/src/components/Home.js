@@ -148,10 +148,10 @@ export default class Home extends Component {
 
             </div>
             <Typography variant="h4" gutterBottom>
-              Object: {this.state.objectsStr} 
+              Garbage: {this.state.objectsStr} 
             </Typography>
             <Typography variant="h4" gutterBottom>
-              Classes: {this.state.classesStr}
+              Classification: {this.state.classesStr}
             </Typography>
             <ImageUploader
                 	withIcon={true}
