@@ -8,7 +8,6 @@ export default class About extends Component {
         <div>
           <img style={{  display: "block",
     margin: "auto" }} alt="logo" src={little} />
-          <Typography variant="h2" align="center" gutterBottom>Little Litters</Typography>
           <Typography variant="h6" align="center" gutterBottom>Version 1.0.0</Typography>
           <Typography variant="h6" align="center" gutterBottom>Recycle for our planet's future.</Typography>
           <Typography variant="h6" align="center" gutterBottom>Starting little, starting now.</Typography>
