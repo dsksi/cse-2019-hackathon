@@ -18,7 +18,7 @@ import CloudUpload from '@material-ui/icons/CloudUpload';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MyLocation from '@material-ui/icons/MyLocation';
 import MailIcon from '@material-ui/icons/Mail';
 import Routes from "./Routes";
 
@@ -142,9 +142,18 @@ export default function NavBar() {
         </List>
         <Divider />
         <List>
-          {['Language', 'About'].map((text, index) => (
+          {['Language', 'Country'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <Language /> : <MailIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <Language /> : <MyLocation />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {['About'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 1 === 0 ? <MailIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
