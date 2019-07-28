@@ -100,14 +100,15 @@ export default class Home extends Component {
     if (image[1] === null) {
       return;
     }
+    console.log(image);
     const predictions = await model.detect(image[1]);
-
+    console.log(predictions);
     if (predictions.length === 0) {
       this.setState({
         objectsStr: "Unknow Object",
         classesStr: "Unknow Object",
       })
-      return;
+      // return;
     } else {
       // add to objects
       predictions.forEach(p => {
@@ -139,10 +140,10 @@ export default class Home extends Component {
 
     // finally do some training
 
-    await axios.post(`https://littlelitter.herokuapp.com/country/${this.state.country}/image/`, {"body": dataULRs} )
-    .then(response => {
-      console.log(response.data)
-    })
+    // await axios.post(`https://littlelitter.herokuapp.com/country/${this.state.country}/image/`, {"body": dataULRs} )
+    // .then(response => {
+    //   console.log(response.data)
+    // })
   }
 
     render() {
