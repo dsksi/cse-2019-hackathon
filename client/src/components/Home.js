@@ -190,7 +190,7 @@ export default class Home extends Component {
               {this.state.classesStr}
             </Typography>
             <Typography align="center" variant="h6" gutterBottom>
-              Recylcling Details:
+              Recycling Details:
             </Typography>
             <Typography align="center" variant="h6" gutterBottom>
               {this.state.details}
