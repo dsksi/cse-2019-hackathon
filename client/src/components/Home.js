@@ -108,7 +108,7 @@ export default class Home extends Component {
         objectsStr: "Unknow Object",
         classesStr: "Unknow Object",
       })
-      // return;
+      return;
     } else {
       // add to objects
       predictions.forEach(p => {
