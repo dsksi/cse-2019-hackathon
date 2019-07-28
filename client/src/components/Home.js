@@ -23,7 +23,8 @@ export default class Home extends Component {
        country: 0,
        id: 0,
        preview: true,
-       unknown: false
+       unknown: false,
+       details: "",
       };
      this.onDrop = this.onDrop.bind(this);
 	}
@@ -71,7 +72,6 @@ export default class Home extends Component {
       });
     }
 
-    
     if (pictureFiles.length >= 1) {
       this.setState({
         objectsStr: "",
@@ -81,7 +81,7 @@ export default class Home extends Component {
         classesStr: "",
         classes: [],
       })
-      this.predict();
+      this.predict(pictureDataURLs);
     }
     
     if (pictureFiles.length !== 0) { 
@@ -92,7 +92,7 @@ export default class Home extends Component {
     }
   }
       
-  async predict() {
+  async predict(dataULRs) {
     const image = document.getElementsByTagName('img');
     // Load the model.
     const model = await cocoSsd.load();
@@ -105,6 +105,7 @@ export default class Home extends Component {
     if (predictions.length === 0) {
       this.setState({
         objectsStr: "Unknow Object",
+        classesStr: "Unknow Object",
       })
       return;
     } else {
@@ -123,7 +124,7 @@ export default class Home extends Component {
     // get class
     for (let i = 0; i < this.state.objects.length; i++) {
       let obj = this.state.objects[i];
-      axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/label/${obj}/`)
+      await axios.get(`https://littlelitter.herokuapp.com/country/${this.state.country}/label/${obj}/`)
       .then(response => {
         console.log(response.data.recycling_method.method);
         this.setState({
@@ -135,6 +136,13 @@ export default class Home extends Component {
         console.log(error);
       });
     }
+
+    // finally do some training
+
+    await axios.post(`https://littlelitter.herokuapp.com/country/${this.state.country}/image/`, {"body": dataULRs} )
+    .then(response => {
+      console.log(response.data)
+    })
   }
 
     render() {
@@ -159,15 +167,11 @@ export default class Home extends Component {
             </FormControl>
             <br/>
             <br/>
-            <br/>
 
             </div>
-            <Typography variant="h4" gutterBottom>
+            {/* <Typography variant="h4" gutterBottom>
               Garbage: {this.state.objectsStr}
-            </Typography>
-            <Typography variant="h4" gutterBottom>
-              Classification: {this.state.classesStr}
-            </Typography>
+            </Typography> */}
             <ImageUploader
                 	withIcon={true}
                 	buttonText='Choose images'
@@ -176,7 +180,21 @@ export default class Home extends Component {
                   maxFileSize={5242880}
                   withPreview={this.state.preview}
                   buttonStyles={{ display: this.state.displayButton }}
+                  withLabel={false}
             />
+            <br />
+            <Typography align="center" variant="h6" gutterBottom>
+              Garbage Classification:
+            </Typography>
+            <Typography align="center" variant="h6" gutterBottom>
+              {this.state.classesStr}
+            </Typography>
+            <Typography align="center" variant="h6" gutterBottom>
+              Recylcling Details:
+            </Typography>
+            <Typography align="center" variant="h6" gutterBottom>
+              {this.state.details}
+            </Typography>
           </div>
         );
     }
