@@ -105,8 +105,8 @@ export default class Home extends Component {
     console.log(predictions);
     if (predictions.length === 0) {
       this.setState({
-        objectsStr: "Unknow Object",
-        classesStr: "Unknow Object",
+        objectsStr: "Unknown Object",
+        classesStr: "Unknown",
       })
       return;
     } else {
@@ -170,9 +170,6 @@ export default class Home extends Component {
             <br/>
 
             </div>
-            {/* <Typography variant="h4" gutterBottom>
-              Garbage: {this.state.objectsStr}
-            </Typography> */}
             <ImageUploader
                 	withIcon={true}
                 	buttonText='Choose images'
@@ -184,6 +181,9 @@ export default class Home extends Component {
                   withLabel={false}
             />
             <br />
+            <Typography align="center" variant="h6" gutterBottom>
+              Object: {this.state.objectsStr}
+            </Typography>
             <Typography align="center" variant="h6" gutterBottom>
               Garbage Classification:
             </Typography>
