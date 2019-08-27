@@ -1,32 +1,14 @@
 # cse-2019-hackathon
 
-## Introduction
+## Problem Statement
+How might we create low cost, scalable technological solutions to tackle one (or more!) of the world's most pressing concerns as listed in the UN's sustainable development goals?
 
-### Problem Statement
+## Our Solution
 
+See presentation.pdf for Rational
 
-### Info
-1. Search UN sustainable development goals
-2. Narrow it down:
-  - country/city/region or specific group of people impacted by this problem to be the focus for the purpose of the hack
-3. Research
-5. Ideation/solution phase
-6. Attend workshops
+- A react web app that provides image waste disposal category classification for the user 
+- Waste item classification was achieved using tensor flow and deep learning resnet34.
+- Support cross-platform, multi-region usage 
 
-### Schedule
-
-Submission by Sunday 10:30am
-- Recommend submitting a video
-
-### Judging
-Preliminary
-- Split into four separate streams
-
-Final
-- 8 teams
-- Ainsworth G03 Theatre
-- Sponsor judges
-
-### Mentor
-- UNSW founders: To talk about how to make it a viable business
--  
+http://cse-2019-hackathon-little-litters.s3-website-ap-southeast-2.amazonaws.com/
